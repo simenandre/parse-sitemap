@@ -16603,6 +16603,9 @@ function parseSiteMapper(url) {
         return urls.sites;
     });
 }
+function mapper_replaceDomain(output, { from, to }) {
+    return output.replace(new RegExp(from, 'g'), to.replace(/\/$/, ''));
+}
 
 ;// CONCATENATED MODULE: ./src/main.ts
 var main_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -16625,8 +16628,7 @@ function main() {
         let output = urls.join('\n');
         if (config.replaceDomain) {
             invariant(config.replaceDomain, 'expect replaceDomain');
-            const { from, to } = config.replaceDomain;
-            output = output.replace(from, to.replace(/^\/+/g, ''));
+            output = mapper_replaceDomain(output, config.replaceDomain);
         }
         (0,core.setOutput)('urls', output);
     });
