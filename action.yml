@@ -1,0 +1,20 @@
+name: Parse Sitemap
+description: Get URLs from sitemap.xml
+author: Simen A. W. Olsen
+
+inputs:
+  sitemap-url:
+    required: true
+    description: E.g. https://bjerk.io/sitemap.xml
+    
+outputs:
+  urls:
+    description: URLs separated by new lines
+    
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+
+branding:
+  icon: bookmark
+  color: green
