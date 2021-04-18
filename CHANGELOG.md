@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/cobraz/parse-sitemap/compare/v1.0.1...v1.1.0) (2021-04-18)
+
+
+### Features
+
+* Add `replaceDomain` ([#10](https://www.github.com/cobraz/parse-sitemap/issues/10)) ([a763be1](https://www.github.com/cobraz/parse-sitemap/commit/a763be1bef77b3aedce055cfb24eb91243fe1a8b))
+
 ### [1.0.1](https://www.github.com/cobraz/parse-sitemap/compare/v1.0.0...v1.0.1) (2021-04-18)
 
 
