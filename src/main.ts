@@ -12,7 +12,7 @@ export async function main(): Promise<void> {
   if (config.replaceDomain) {
     invariant(config.replaceDomain, 'expect replaceDomain');
     const { from, to } = config.replaceDomain;
-    output = output.replace(from, to);
+    output = output.replace(from, to.replace(/^\/+/g, ''));
   }
 
   setOutput('urls', output);
