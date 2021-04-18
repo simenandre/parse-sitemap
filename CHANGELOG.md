@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/cobraz/parse-sitemap/compare/v1.1.0...v1.1.1) (2021-04-18)
+
+
+### Bug Fixes
+
+* Fix regex issue on replace domain ([e90e0a8](https://www.github.com/cobraz/parse-sitemap/commit/e90e0a83dd2f2ff71b9eafb919f5467769cd00c2))
+* Remove leading slash ([2c6143a](https://www.github.com/cobraz/parse-sitemap/commit/2c6143abb70f34a6406e6102c04e30e087c5fa8f))
+
 ## [1.1.0](https://www.github.com/cobraz/parse-sitemap/compare/v1.0.1...v1.1.0) (2021-04-18)
 
 
