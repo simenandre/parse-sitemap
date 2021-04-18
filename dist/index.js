@@ -16626,7 +16626,7 @@ function main() {
         if (config.replaceDomain) {
             invariant(config.replaceDomain, 'expect replaceDomain');
             const { from, to } = config.replaceDomain;
-            output = output.replace(from, to);
+            output = output.replace(from, to.replace(/^\/+/g, ''));
         }
         (0,core.setOutput)('urls', output);
     });
