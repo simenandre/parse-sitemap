@@ -16534,6 +16534,13 @@ __nccwpck_require__.d(__webpack_exports__, {
 var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/runtypes/lib/index.js
 var lib = __nccwpck_require__(5568);
+;// CONCATENATED MODULE: ./src/utils.ts
+function invariant(condition, message) {
+    if (!condition) {
+        throw new Error(message);
+    }
+}
+
 ;// CONCATENATED MODULE: ./src/config.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -16547,16 +16554,30 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 /* eslint @typescript-eslint/no-var-requires: 0 */
 
 
+
 if (!process.env.CI) {
     __nccwpck_require__(2437).config();
 }
+const replaceDomain = lib.Record({
+    from: lib.String,
+    to: lib.String,
+});
 const config = lib.Record({
     siteMapURL: lib.String,
+    replaceDomain: replaceDomain.optional(),
 });
+function parseReplaceDomain(replaceStr) {
+    if (!replaceStr)
+        return undefined;
+    const [from, to] = replaceStr.split('|');
+    invariant(from || to, 'missing from or to. Syntax for replaceDomain is: fromdomain.tld|todomain.tld');
+    return replaceDomain.check({ from, to });
+}
 function makeConfig() {
     return __awaiter(this, void 0, void 0, function* () {
         return config.check({
             siteMapURL: (0,core.getInput)('sitemap-url'),
+            replaceDomain: parseReplaceDomain((0,core.getInput)('replace-domain')),
         });
     });
 }
@@ -16596,11 +16617,18 @@ var main_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arg
 
 
 
+
 function main() {
     return main_awaiter(this, void 0, void 0, function* () {
         const config = yield makeConfig();
         const urls = yield parseSiteMapper(config.siteMapURL);
-        (0,core.setOutput)('urls', urls.join('\n'));
+        let output = urls.join('\n');
+        if (config.replaceDomain) {
+            invariant(config.replaceDomain, 'expect replaceDomain');
+            const { from, to } = config.replaceDomain;
+            output = output.replace(from, to);
+        }
+        (0,core.setOutput)('urls', output);
     });
 }
 main().catch(e => {
