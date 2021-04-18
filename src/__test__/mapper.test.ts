@@ -1,5 +1,6 @@
+import dedent from 'dedent';
 import nock from 'nock';
-import { parseSiteMapper } from '../mapper';
+import { parseSiteMapper, replaceDomain } from '../mapper';
 
 const siteMap = `
 <urlset
@@ -33,6 +34,24 @@ describe('mapper', () => {
         "https://bjerk.io/projects/indiv",
         "https://bjerk.io/projects/lent",
       ]
+    `);
+  });
+  it('should replace domain', () => {
+    const domains = dedent`
+      https://bjerk.io/about/
+      https://bjerk.io/services/
+      https://bjerk.io/
+    `;
+
+    const replaced = replaceDomain(domains, {
+      from: 'https://bjerk.io',
+      to: 'https://btools.no/',
+    });
+
+    expect(replaced).toMatchInlineSnapshot(`
+      "https://btools.no/about/
+      https://btools.no/services/
+      https://btools.no/"
     `);
   });
 });

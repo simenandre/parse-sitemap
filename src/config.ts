@@ -12,14 +12,14 @@ export const replaceDomain = rt.Record({
   to: rt.String,
 });
 
-export type ReplaceDomainType = rt.Static<typeof replaceDomain>;
+export type ReplaceDomain = rt.Static<typeof replaceDomain>;
 
 export const config = rt.Record({
   siteMapURL: rt.String,
   replaceDomain: replaceDomain.optional(),
 });
 
-function parseReplaceDomain(replaceStr?: string): undefined | ReplaceDomainType {
+function parseReplaceDomain(replaceStr?: string): undefined | ReplaceDomain {
   if (!replaceStr) return undefined;
   const [from, to] = replaceStr.split('|');
   invariant(

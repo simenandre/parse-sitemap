@@ -1,6 +1,6 @@
 import { debug, setFailed, setOutput } from '@actions/core';
 import { makeConfig } from './config';
-import { parseSiteMapper } from './mapper';
+import { parseSiteMapper, replaceDomain } from './mapper';
 import { invariant } from './utils';
 
 export async function main(): Promise<void> {
@@ -11,8 +11,7 @@ export async function main(): Promise<void> {
 
   if (config.replaceDomain) {
     invariant(config.replaceDomain, 'expect replaceDomain');
-    const { from, to } = config.replaceDomain;
-    output = output.replace(from, to.replace(/^\/+/g, ''));
+    output = replaceDomain(output, config.replaceDomain)
   }
 
   setOutput('urls', output);
