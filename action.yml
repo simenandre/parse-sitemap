@@ -6,6 +6,9 @@ inputs:
   sitemap-url:
     required: true
     description: E.g. https://bjerk.io/sitemap.xml
+  replace-domain:
+    required: false
+    description: Set to replace domain in sitemap
     
 outputs:
   urls:
