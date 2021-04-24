@@ -9310,12 +9310,38 @@ exports.Partial = Partial;
 function withExtraModifierFuncs(A) {
     A.asPartial = asPartial;
     A.asReadonly = asReadonly;
+    A.pick = pick;
+    A.omit = omit;
     return A;
     function asPartial() {
         return InternalRecord(A.fields, true, A.isReadonly);
     }
     function asReadonly() {
         return InternalRecord(A.fields, A.isPartial, true);
+    }
+    function pick() {
+        var keys = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            keys[_i] = arguments[_i];
+        }
+        var result = {};
+        keys.forEach(function (key) {
+            result[key] = A.fields[key];
+        });
+        return InternalRecord(result, A.isPartial, A.isReadonly);
+    }
+    function omit() {
+        var keys = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            keys[_i] = arguments[_i];
+        }
+        var result = {};
+        var existingKeys = util_1.enumerableKeysOf(A.fields);
+        existingKeys.forEach(function (key) {
+            if (!keys.includes(key))
+                result[key] = A.fields[key];
+        });
+        return InternalRecord(result, A.isPartial, A.isReadonly);
     }
 }
 
@@ -9631,7 +9657,8 @@ var typeOf = function (value) {
 exports.typeOf = typeOf;
 var enumerableKeysOf = function (object) {
     return typeof object === 'object' && object !== null
-        ? Reflect.ownKeys(object).filter(function (key) { return object.propertyIsEnumerable(key); })
+        ? // Objects with a null prototype may not have `propertyIsEnumerable`
+            Reflect.ownKeys(object).filter(function (key) { var _a, _b; return (_b = (_a = object.propertyIsEnumerable) === null || _a === void 0 ? void 0 : _a.call(object, key)) !== null && _b !== void 0 ? _b : true; })
         : [];
 };
 exports.enumerableKeysOf = enumerableKeysOf;
