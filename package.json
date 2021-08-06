@@ -3,6 +3,16 @@
   "version": "1.1.1",
   "private": true,
   "description": "Get URLs from sitemap.xml",
+  "keywords": [
+    "sitemap",
+    "github-actions",
+    "sitemap-parse",
+    "lighthouse",
+    "lighthouse-ci"
+  ],
+  "repository": "github:cobraz/parse-sitemap",
+  "license": "Apache-2.0",
+  "author": "Simen A. W. Olsen <so@bjerk.io>",
   "main": "build/main.js",
   "scripts": {
     "dev": "ts-node src/main.ts",
@@ -15,19 +25,12 @@
     "all": "yarn  run build && yarn  run format && yarn run lint && yarn run test",
     "prepare": "husky install .github/husky"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cobraz/parse-sitemap.git"
+  "lint-staged": {
+    "src/**/*.{yaml,yml}": "prettier --write",
+    "src/**/*.{js,ts}": "eslint --cache --fix",
+    "{.eslintrc,.releaserc.json,.tsconfig.json}": "prettier --write",
+    "*.md": "prettier --write"
   },
-  "keywords": [
-    "sitemap",
-    "github-actions",
-    "sitemap-parse",
-    "lighthouse",
-    "lighthouse-ci"
-  ],
-  "author": "Simen A. W. Olsen <so@bjerk.io>",
-  "license": "Apache-2.0",
   "dependencies": {
     "@actions/core": "^1.2.6",
     "sitemapper": "^3.1.12"
@@ -57,11 +60,5 @@
     "ts-jest": "~26.5.5",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.5"
-  },
-  "lint-staged": {
-    "src/**/*.{yaml,yml}": "prettier --write",
-    "src/**/*.{js,ts}": "eslint --cache --fix",
-    "{.eslintrc,.releaserc.json,.tsconfig.json}": "prettier --write",
-    "*.md": "prettier --write"
   }
 }
